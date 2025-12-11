@@ -1,0 +1,10 @@
+# Mosquitto runtime data
+mosquitto/data/*
+!mosquitto/data/.gitkeep
+
+# Mosquitto logs
+mosquitto/log/*
+!mosquitto/log/.gitkeep
+
+# Keep directory structure
+!mosquitto/config/

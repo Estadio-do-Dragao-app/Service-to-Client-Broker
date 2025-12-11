@@ -1,0 +1,28 @@
+# Shared MQTT Broker for Client Services
+# All services (Alert, Congestion, WaitTime) publish to this broker
+# Clients subscribe to this broker to receive all service updates
+
+version: '3.8'
+
+services:
+  client-mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: client-mosquitto
+    ports:
+      - "1884:1883"  # MQTT
+      - "9002:9001"  # WebSocket
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - client-network
+      - stadium_network
+    restart: unless-stopped
+
+networks:
+  client-network:
+    driver: bridge
+  stadium_network:
+    external: true
+    name: stadium-event-generator_stadium-network
